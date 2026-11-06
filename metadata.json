@@ -1,0 +1,16 @@
+{
+  "name": "1911 Penny",
+  "symbol": "WYON",
+  "description": "Wyon Coins Test NFT",
+  "image": "https://gateway.pinata.cloud/ipfs/bafkreigkgquxyahwjdhhfhwzrcathkrj3rhy6kxsklp4ey5k5t4g3n2kuy",
+  "attributes": [
+    {
+      "trait_type": "Country",
+      "value": "United Kingdom"
+    },
+    {
+      "trait_type": "Composition",
+      "value": "Bronze"
+    }
+  ]
+}
