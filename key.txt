@@ -1,0 +1,4 @@
+pubkey: VttnqFvjKUEQu3cUpPpMT9ML72Dsu7wKDPVL1bMqeFd
+==============================================================================
+Save this seed phrase and your BIP39 passphrase to recover your new keypair:
+afraid moon museum scale grace gasp among vivid original stock seminar auction

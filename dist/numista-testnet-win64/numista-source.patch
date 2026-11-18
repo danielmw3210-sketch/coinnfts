@@ -1,0 +1,182 @@
+diff --git a/src/cryptonote_config.h b/src/cryptonote_config.h
+index a43e5ae..6107061 100644
+--- a/src/cryptonote_config.h
++++ b/src/cryptonote_config.h
+@@ -168,7 +168,7 @@ static_assert(CURRENCY_PROTOCOL_MAX_OBJECT_REQUEST_COUNT >= BLOCKS_SYNCHRONIZING
+ 
+ #define RPC_IP_FAILS_BEFORE_BLOCK                       3
+ 
+-#define CRYPTONOTE_NAME                         "bitmonero"
++#define CRYPTONOTE_NAME                         "numista"
+ #define CRYPTONOTE_BLOCKCHAINDATA_FILENAME      "data.mdb"
+ #define CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME "lock.mdb"
+ #define P2P_NET_DATA_FILENAME                   "p2pstate.bin"
+@@ -280,17 +280,18 @@ namespace config
+ 
+   namespace testnet
+   {
+-    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 53;
+-    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 54;
+-    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 63;
+-    uint16_t const P2P_DEFAULT_PORT = 28080;
+-    uint16_t const RPC_DEFAULT_PORT = 28081;
+-    uint16_t const ZMQ_RPC_DEFAULT_PORT = 28082;
++    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 94;
++    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 95;
++    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 96;
++    uint16_t const P2P_DEFAULT_PORT = 48080;
++    uint16_t const RPC_DEFAULT_PORT = 48081;
++    uint16_t const ZMQ_RPC_DEFAULT_PORT = 48082;
+     boost::uuids::uuid const NETWORK_ID = { {
+-        0x12 ,0x30, 0xF1, 0x71 , 0x61, 0x04 , 0x41, 0x61, 0x17, 0x31, 0x00, 0x82, 0x16, 0xA1, 0xA1, 0x11
+-      } }; // Bender's daydream
++        0x4e, 0x55, 0x4d, 0x49, 0x53, 0x54, 0x41, 0x2d,
++        0x54, 0x45, 0x53, 0x54, 0x4e, 0x45, 0x54, 0x01
++      } }; // NUMISTA-TESTNET
+     std::string const GENESIS_TX = "013c01ff0001ffffffffffff03029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd08807121017767aafcde9be00dcfd098715ebcf7f410daebc582fda69d24a28e9d0bc890d1";
+-    uint32_t const GENESIS_NONCE = 10001;
++    uint32_t const GENESIS_NONCE = 10003;
+   }
+ 
+   namespace stagenet
+diff --git a/src/hardforks/hardforks.cpp b/src/hardforks/hardforks.cpp
+index 571ba38..922b4a5 100644
+--- a/src/hardforks/hardforks.cpp
++++ b/src/hardforks/hardforks.cpp
+@@ -78,31 +78,26 @@ const size_t num_mainnet_hard_forks = sizeof(mainnet_hard_forks) / sizeof(mainne
+ const uint64_t mainnet_hard_fork_version_1_till = 1009826;
+ 
+ const hardfork_t testnet_hard_forks[] = {
+-  // version 1 from the start of the blockchain
+-  { 1, 1, 0, 1341378000 },
+-
+-  // version 2 starts from block 624634, which is on or around the 23rd of November, 2015. Fork time finalised on 2015-11-20. No fork voting occurs for the v2 fork.
+-  { 2, 624634, 0, 1445355000 },
+-
+-  // versions 3-5 were passed in rapid succession from September 18th, 2016
+-  { 3, 800500, 0, 1472415034 },
+-  { 4, 801219, 0, 1472415035 },
+-  { 5, 802660, 0, 1472415036 + 86400*180 }, // add 5 months on testnet to shut the update warning up since there's a large gap to v6
+-
+-  { 6, 971400, 0, 1501709789 },
+-  { 7, 1057027, 0, 1512211236 },
+-  { 8, 1057058, 0, 1533211200 },
+-  { 9, 1057778, 0, 1533297600 },
+-  { 10, 1154318, 0, 1550153694 },
+-  { 11, 1155038, 0, 1550225678 },
+-  { 12, 1308737, 0, 1569582000 },
+-  { 13, 1543939, 0, 1599069376 },
+-  { 14, 1544659, 0, 1599069377 },
+-  { 15, 1982800, 0, 1652727000 },
+-  { 16, 1983520, 0, 1652813400 },
++  // Testnet activations are height-based; ordered future timestamps keep all forks registered.
++  { 1, 1, 0, 2000000000 },
++  { 2, 2, 0, 2000000001 },
++  { 3, 3, 0, 2000000002 },
++  { 4, 4, 0, 2000000003 },
++  { 5, 5, 0, 2000000004 },
++  { 6, 6, 0, 2000000005 },
++  { 7, 7, 0, 2000000006 },
++  { 8, 8, 0, 2000000007 },
++  { 9, 9, 0, 2000000008 },
++  { 10, 10, 0, 2000000009 },
++  { 11, 11, 0, 2000000010 },
++  { 12, 12, 0, 2000000011 },
++  { 13, 13, 0, 2000000012 },
++  { 14, 14, 0, 2000000013 },
++  { 15, 15, 0, 2000000014 },
++  { 16, 16, 0, 2000000015 },
+ };
+ const size_t num_testnet_hard_forks = sizeof(testnet_hard_forks) / sizeof(testnet_hard_forks[0]);
+-const uint64_t testnet_hard_fork_version_1_till = 624633;
++const uint64_t testnet_hard_fork_version_1_till = 0;
+ 
+ const hardfork_t stagenet_hard_forks[] = {
+   // version 1 from the start of the blockchain
+diff --git a/src/version.cpp.in b/src/version.cpp.in
+index 91fdc99..3368979 100644
+--- a/src/version.cpp.in
++++ b/src/version.cpp.in
+@@ -1,6 +1,6 @@
+ #define DEF_MONERO_VERSION_TAG "@VERSIONTAG@"
+ #define DEF_MONERO_VERSION "0.18.1.0"
+-#define DEF_MONERO_RELEASE_NAME "Fluorine Fermi"
++#define DEF_MONERO_RELEASE_NAME "Numista Coin"
+ #define DEF_MONERO_VERSION_FULL DEF_MONERO_VERSION "-" DEF_MONERO_VERSION_TAG
+ #define DEF_MONERO_VERSION_IS_RELEASE @VERSION_IS_RELEASE@
+ 
+diff --git a/tests/unit_tests/cryptonote_format_utils.cpp b/tests/unit_tests/cryptonote_format_utils.cpp
+index 617527b..e780c37 100644
+--- a/tests/unit_tests/cryptonote_format_utils.cpp
++++ b/tests/unit_tests/cryptonote_format_utils.cpp
+@@ -29,7 +29,9 @@
+ #include "gtest/gtest.h"
+ 
+ #include "crypto/generators.h"
++#include "cryptonote_config.h"
+ #include "cryptonote_basic/cryptonote_format_utils.h"
++#include "cryptonote_core/cryptonote_tx_utils.h"
+ #include "file_io_utils.h"
+ #include "serialization/binary_utils.h"
+ #include "serialization/string.h"
+@@ -42,6 +44,28 @@ static constexpr const char EXISTING_BLOCK_POW_HASH_202612[] =
+     "84f64766475d51837ac9efbef1926486e58563c95a19fef4aec3254f03000000";
+ } //anonymous namespace
+ 
++TEST(numista_testnet, has_isolated_network_identity)
++{
++    const auto& numista = cryptonote::get_config(cryptonote::TESTNET);
++    const auto& mainnet = cryptonote::get_config(cryptonote::MAINNET);
++    const auto& stagenet = cryptonote::get_config(cryptonote::STAGENET);
++
++    EXPECT_NE(numista.NETWORK_ID, mainnet.NETWORK_ID);
++    EXPECT_NE(numista.NETWORK_ID, stagenet.NETWORK_ID);
++    EXPECT_NE(numista.GENESIS_NONCE, mainnet.GENESIS_NONCE);
++    EXPECT_NE(numista.GENESIS_NONCE, stagenet.GENESIS_NONCE);
++    EXPECT_NE(numista.P2P_DEFAULT_PORT, mainnet.P2P_DEFAULT_PORT);
++    EXPECT_NE(numista.P2P_DEFAULT_PORT, stagenet.P2P_DEFAULT_PORT);
++    EXPECT_NE(numista.CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX, mainnet.CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX);
++    EXPECT_NE(numista.CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX, stagenet.CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX);
++
++    cryptonote::block numista_genesis;
++    cryptonote::block mainnet_genesis;
++    ASSERT_TRUE(cryptonote::generate_genesis_block(numista_genesis, numista.GENESIS_TX, numista.GENESIS_NONCE));
++    ASSERT_TRUE(cryptonote::generate_genesis_block(mainnet_genesis, mainnet.GENESIS_TX, mainnet.GENESIS_NONCE));
++    EXPECT_NE(cryptonote::get_block_hash(numista_genesis), cryptonote::get_block_hash(mainnet_genesis));
++}
++
+ TEST(cn_format_utils, add_extra_nonce_to_tx_extra)
+ {
+     static constexpr std::size_t max_nonce_size = TX_EXTRA_NONCE_MAX_COUNT + 1; // we *can* test higher if desired
+diff --git a/tests/unit_tests/hardfork.cpp b/tests/unit_tests/hardfork.cpp
+index 4363be6..6b91fc7 100644
+--- a/tests/unit_tests/hardfork.cpp
++++ b/tests/unit_tests/hardfork.cpp
+@@ -35,6 +35,7 @@
+ #include "cryptonote_basic/cryptonote_format_utils.h"
+ #include "cryptonote_basic/hardfork.h"
+ #include "blockchain_db/testdb.h"
++#include "hardforks/hardforks.h"
+ 
+ using namespace cryptonote;
+ 
+@@ -157,6 +158,19 @@ TEST(ordering, Success)
+   ASSERT_FALSE(hf.add_fork(5, 5, 4));
+ }
+ 
++TEST(numista_testnet_schedule, Registers_all_forks)
++{
++  TestDB db;
++  HardFork hf(db, 1, testnet_hard_fork_version_1_till, 0, 0, 1, 0);
++
++  for (size_t i = 0; i < num_testnet_hard_forks; ++i) {
++    const hardfork_t &fork = testnet_hard_forks[i];
++    ASSERT_TRUE(hf.add_fork(fork.version, fork.height, fork.threshold, fork.time));
++  }
++
++  ASSERT_EQ(hf.get_hardforks().size(), num_testnet_hard_forks);
++}
++
+ TEST(check_for_height, Success)
+ {
+   TestDB db;
